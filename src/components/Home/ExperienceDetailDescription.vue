@@ -23,8 +23,7 @@
         </div>
         <v-divider></v-divider>
 
-        <div style="text-align: justify">
-          {{ exp.description }}
+        <div v-html="exp.description">
         </div>
       </v-card-text>
 

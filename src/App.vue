@@ -64,6 +64,9 @@ import MyFooter from "@/layout/MyFooter";
 export default {
   name: 'App',
   components: {MyFooter, FrontImage},
+  metaInfo:{
+    title: 'Eriel Mejias',
+  },
   data: () => ({
     nav_btn:[
       { label: 'Home', icon: 'mdi-home', color: 'orange', to: { name: 'Home' } },
