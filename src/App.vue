@@ -16,28 +16,37 @@
       </span>
       <v-spacer></v-spacer>
 
-      <v-btn text link :to="{name: 'Home'}">
-        <v-icon left color="orange">
-          mdi-home
-        </v-icon>
-        {{$t("Home")}}
-      </v-btn>
-      <v-btn text link :to="{ name: 'History' }">
-        <v-icon left color="orange">
-          mdi-code-json
-        </v-icon>
-        {{$t('Experience')}}
-      </v-btn>
-      <v-btn text link>
-        <v-icon left color="orange">
-          mdi-code-braces
-        </v-icon>
-        {{$t('Blog')}}
-      </v-btn>
-      <v-btn text link>
-        <v-icon left color="orange">mdi-help</v-icon>
-        {{$t('About')}}
-      </v-btn>
+      <template v-if="$vuetify.breakpoint.smAndUp">
+        <v-btn text v-for="nav of nav_btn" :key="nav.label" link :to="nav.to">
+          <v-icon left :color="nav.color">
+            {{nav.icon}}
+          </v-icon>
+          {{$t(nav.label)}}
+        </v-btn>
+      </template>
+      <template v-else>
+        <v-menu bottom>
+          <template #activator="{on,attr}">
+            <v-btn v-on="on" v-bind="attr" small fab rounded>
+              <v-icon>
+                mdi-menu
+              </v-icon>
+            </v-btn>
+          </template>
+          <v-list dark>
+            <v-list-item v-for="nav of nav_btn" :key="nav.label" link :to="nav.to">
+              <v-list-item-icon>
+                <v-icon color="orange">{{nav.icon}}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{nav.label}}
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </template>
     </v-app-bar>
 
     <v-main>
@@ -56,7 +65,12 @@ export default {
   name: 'App',
   components: {MyFooter, FrontImage},
   data: () => ({
-    //
+    nav_btn:[
+      { label: 'Home', icon: 'mdi-home', color: 'orange', to: { name: 'Home' } },
+      { label: 'Experience', icon: 'mdi-code-braces', color: 'orange', to: { name: 'History' } },
+      // { label: 'Blog', icon: 'mdi-home', color: 'orange', to: { name: 'Home' } },
+      // { label: 'About', icon: 'mdi-home', color: 'orange', to: { name: 'Home' } },
+    ]
   }),
 };
 </script>

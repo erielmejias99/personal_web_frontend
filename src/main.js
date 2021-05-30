@@ -7,7 +7,7 @@ import vuetify from './plugins/vuetify';
 import '@mdi/font/css/materialdesignicons.min.css'
 
 import axios from 'axios'
-const baseURL = process.env.NODE_ENV === 'production' ? 'https://erielmejias99.herokuapp.com/api/' : 'http://localhost:8000/api/';
+const baseURL = process.env.NODE_ENV === 'production' ? 'https://erielmejias99-back.herokuapp.com/api/' : 'http://localhost:8000/api/';
 
 axios.defaults.baseURL = baseURL
 

@@ -25,7 +25,7 @@
 
     <v-row v-if="status === 'ok'">
       <v-col cols="12">
-        <v-timeline>
+        <v-timeline v-if="$vuetify.breakpoint.mdAndUp">
           <!--Experience-->
           <template v-for="exp in experience">
             <v-timeline-item :key="'experience' + exp.id" color="success">
@@ -44,10 +44,10 @@
                     <v-list-item-subtitle>
                       <v-icon>mdi-google-maps</v-icon>{{exp.location}}
                       <template v-if="exp.web_site"> |
-                      <v-icon color="success">mdi-web</v-icon>
-                      <router-link target="_blank" :to="exp.web_site">
-                        {{exp.web_site}}
-                      </router-link>
+                        <v-icon color="success">mdi-web</v-icon>
+                        <router-link target="_blank" :to="exp.web_site">
+                          {{exp.web_site}}
+                        </router-link>
                       </template>
                     </v-list-item-subtitle>
                   </v-list-item-content>
@@ -65,38 +65,108 @@
           <!--Formation-->
           <template v-for="form in formation">
             <v-timeline-item :key="'formation' + form.id">
-            <template #opposite>
+              <template #opposite>
+                <v-list-item>
+                  <v-list-item-avatar size="70" left tile>
+                   <v-img :src="form.image"></v-img>
+                  </v-list-item-avatar>
+
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      <span class="title">
+                        {{form.institution}}
+                      </span>
+                    </v-list-item-title>
+                    <v-list-item-subtitle>
+                      <v-icon>mdi-google-maps</v-icon>{{form.location}}  |
+                      <v-icon color="primary">mdi-web</v-icon>
+                      <router-link :to="form.web_page">
+                        {{form.web_page}}
+                      </router-link>
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+
+                </v-list-item>
+              </template>
+
+              <template #icon>
+              <v-icon>mdi-school</v-icon>
+              </template>
+
+              <formation-card :item="form"></formation-card>
+           </v-timeline-item>
+          </template>
+        </v-timeline>
+
+
+        <template v-else>
+          <!--Experience-->
+          <template v-if="experience.length">
+            <h1 class="text-center">{{$t('Experience')}} <v-icon>mdi-laptop</v-icon></h1>
+            <v-divider></v-divider>
+          </template>
+          <template v-for="exp in experience">
+            <div :key="exp.id">
               <v-list-item>
                 <v-list-item-avatar size="70" left tile>
-                 <v-img :src="form.image"></v-img>
+                  <v-img :src="exp.image"></v-img>
                 </v-list-item-avatar>
 
                 <v-list-item-content>
                   <v-list-item-title>
                     <span class="title">
-                      {{form.institution}}
+                      {{exp.company}}
                     </span>
                   </v-list-item-title>
                   <v-list-item-subtitle>
-                    <v-icon>mdi-google-maps</v-icon>{{form.location}}  |
-                    <v-icon color="primary">mdi-web</v-icon>
-                    <router-link :to="form.web_page">
-                      {{form.web_page}}
-                    </router-link>
+                    <v-icon>mdi-google-maps</v-icon>{{exp.location}}
+                    <template v-if="exp.web_site"> |
+                      <v-icon color="success">mdi-web</v-icon>
+                      <router-link target="_blank" :to="exp.web_site">
+                        {{exp.web_site}}
+                      </router-link>
+                    </template>
                   </v-list-item-subtitle>
                 </v-list-item-content>
 
               </v-list-item>
-            </template>
-
-            <template #icon>
-            <v-icon>mdi-school</v-icon>
-            </template>
-
-            <formation-card :item="form"></formation-card>
-           </v-timeline-item>
+              <experience-card color="success" :item="exp"></experience-card>
+            </div>
           </template>
-        </v-timeline>
+
+
+          <!--Formation-->
+          <template v-if="formation.length">
+            <h1 class="text-center mt-6">{{$t('Formation')}}<v-icon>mdi-school</v-icon></h1>
+            <v-divider></v-divider>
+          </template>
+          <template v-for="form in formation">
+            <div :key="form.id">
+                <v-list-item>
+                  <v-list-item-avatar size="70" left tile>
+                    <v-img :src="form.image"></v-img>
+                  </v-list-item-avatar>
+
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      <span class="title">
+                        {{form.institution}}
+                      </span>
+                    </v-list-item-title>
+                    <v-list-item-subtitle>
+                      <v-icon>mdi-google-maps</v-icon>{{form.location}}  |
+                      <v-icon color="primary">mdi-web</v-icon>
+                      <router-link :to="form.web_page">
+                        {{form.web_page}}
+                      </router-link>
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+
+                </v-list-item>
+              <formation-card :item="form"></formation-card>
+            </div>
+          </template>
+        </template>
       </v-col>
     </v-row>
   </v-container>
@@ -177,7 +247,6 @@ export default {
     "loading_history": "Loading History...",
     "error_loading_data": "Error loading information.",
     "no_history": "No history yet."
-
   }
 }
 </i18n>
